@@ -49,7 +49,10 @@ class WhatsApp:
             except AttributeError:
                 msg = 'Huh?'
 
-        return ' '.join(msg.split(' ')[2:])
+        try:
+            return ' '.join(msg.split(' ')[2:])
+        except:
+            return 'Huh?'
 
     def read_and_respond(self):
         while True:
@@ -59,6 +62,8 @@ class WhatsApp:
             try:
                 if last_msg[:3] == 'You':
                     sleep(10)
+                    msgs = Series(self._get_messages())
+                    last_msg = msgs.iloc[-1]
 
                 last_msg = self._parse_message(last_msg)
                 response = bot.get_response(last_msg)
