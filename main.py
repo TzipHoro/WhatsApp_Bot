@@ -47,7 +47,7 @@ class WhatsApp:
             try:
                 msg = message[:re.search('\d{1}:\d{2} \w{1}M', message).span()[0] - 1]
             except AttributeError:
-                msg = message
+                msg = 'Huh?'
 
         return ' '.join(msg.split(' ')[2:])
 
