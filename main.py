@@ -2,7 +2,7 @@ from pywinauto.application import Application
 from pywinauto import keyboard
 from pandas import Series
 from time import sleep
-from Response_Bot.bot_trainer import bot
+from bot_trainer import bot
 import re
 
 
@@ -73,7 +73,7 @@ class WhatsApp:
                 new_message = self.com_obj.WhatsApp.messageGroupBox2.wrapper_object()
                 new_message.invoke()
                 sleep(1)
-                keyboard.send_keys('huh{ENTER}?')
+                keyboard.send_keys('huh?{ENTER}')
 
 
 if __name__ == '__main__':
