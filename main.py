@@ -1,8 +1,8 @@
 from pywinauto.application import Application
 from pywinauto import keyboard
 from pandas import Series
-from time import sleep
-from bot_trainer import bot
+from time import sleep, time
+from bot import bot
 import re
 
 
@@ -49,16 +49,29 @@ class WhatsApp:
             except AttributeError:
                 msg = 'Huh?'
 
-        return ' '.join(msg.split(' ')[2:])
+        try:
+            return ' '.join(msg.split(' ')[2:])
+        except:
+            return 'Huh?'
 
-    def read_and_respond(self):
+    def read_and_respond(self, minutes: int = 5):
+        start = time()
+
         while True:
+            now = time()
+            elapsed = (now - start) / 60
+
+            if elapsed >= minutes:
+                break
+
             msgs = Series(self._get_messages())
             last_msg = msgs.iloc[-1]
 
             try:
                 if last_msg[:3] == 'You':
                     sleep(10)
+                    msgs = Series(self._get_messages())
+                    last_msg = msgs.iloc[-1]
 
                 last_msg = self._parse_message(last_msg)
                 response = bot.get_response(last_msg)
@@ -77,6 +90,6 @@ class WhatsApp:
 
 
 if __name__ == '__main__':
-    w_bot = WhatsApp(chat_name='Something Else')
+    w_bot = WhatsApp(chat_name='Entertaining Insomniacs')
     w_bot.select_chat()
-    w_bot.read_and_respond()
+    w_bot.read_and_respond(minutes=2)

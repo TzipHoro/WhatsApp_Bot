@@ -1,2 +1,4 @@
 /venv/
 /bot.db
+/bot.db-shm
+/bot.db-wal
